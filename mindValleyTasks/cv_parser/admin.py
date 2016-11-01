@@ -3,41 +3,41 @@ from cv_parser.models import CV, Link, Qualification, WorkExperience, Project, I
 
 class CVAdmin(admin.ModelAdmin):
     
-    list_display = ('name', 'dob', 'email', 'phone_number', 'created_at', 'updated_at')
+    list_display = ('guid', 'name', 'dob', 'email', 'phone_number', 'created_at', 'updated_at')
 
 admin.site.register(CV, CVAdmin)
 
 
 class LinkAdmin(admin.ModelAdmin):
     
-    list_display = ('name', 'url', 'cv', 'created_at', 'updated_at')
+    list_display = ('guid', 'name', 'url', 'cv', 'created_at', 'updated_at')
 
 admin.site.register(Link, LinkAdmin)
 
 
 class QualificationAdmin(admin.ModelAdmin):
     
-    list_display = ('title', 'text', 'summary', 'cv', 'created_at', 'updated_at')
+    list_display = ('guid', 'title', 'text', 'summary', 'cv', 'created_at', 'updated_at')
 
 admin.site.register(Qualification, QualificationAdmin)
 
 class WorkExperienceAdmin(admin.ModelAdmin):
     
-    list_display = ('title', 'company', 'role', 'from_date', 'to_date', 'cv', 'summary', 'created_at', 'updated_at')
+    list_display = ('guid', 'title', 'company', 'role', 'from_date', 'to_date', 'cv', 'summary', 'created_at', 'updated_at')
 
 admin.site.register(WorkExperience, WorkExperienceAdmin)
 
 
 class ProjectAdmin(admin.ModelAdmin):
     
-    list_display = ('title', 'summary', 'cv', 'created_at', 'updated_at')
+    list_display = ('guid', 'title', 'summary', 'cv', 'created_at', 'updated_at')
 
 admin.site.register(Project, ProjectAdmin)
 
 
 class InterestAdmin(admin.ModelAdmin):
     
-    list_display = ('name', 'summary', 'cv', 'created_at', 'updated_at')
+    list_display = ('guid', 'name', 'summary', 'cv', 'created_at', 'updated_at')
 
 admin.site.register(Interest, InterestAdmin)
 

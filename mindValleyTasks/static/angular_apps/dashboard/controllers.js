@@ -23,7 +23,8 @@
 
     .controller("cvUploaderController",[
         "$scope", 
-        function($scope){
+        "cvService",
+        function($scope, cvService){
 
             $scope.form = {
                 name: null,
@@ -37,6 +38,46 @@
                 projects: [],
                 interests: [],
             };
+
+            (function init(){
+                $scope.cvJson = null;
+                $scope.uploaderState = 0;
+                $scope.cvObject = null;    
+            })();
+
+            
+
+            $scope.submit = function(){     
+                $scope.uploaderState = 1;         
+                try{
+                    var json = JSON.parse($scope.cvJson);    
+                }
+                catch(err){
+                    alert("Please enter a valid JSON!\n\n", err);
+                    return;
+                }  
+                
+                if(json){
+                    cvService.uploadCV(json)
+                    .then(function(resolve){
+                        console.log(resolve);
+                        $scope.cvObject = resolve[0];
+                        $scope.uploaderState = 2;
+                    }, function(reject){
+                        console.error(reject);
+                        $scope.uploaderState = 0;
+                    });
+                }
+                else{
+                    alert("Please enter a valid JSON!");
+                }
+            }
+
+            $scope.reset = function(){
+                $scope.cvJson = null;
+                $socpe.uploaderState = 0;
+                $scope.cvObject = null;
+            }
 
         }
     ])

@@ -22,12 +22,34 @@ angular.module('app.services', [])
 	    	scope: {
 	    		cvObject: "=cvObject", 	    		
 	    	},
-	    	templateUrl: "views/cvViewer.html",
+	    	templateUrl: "../views/cvViewer.html",
 	    	controller: function ($scope){
 	    		
 	    	},	    	
 	  	};
 
+	})
+
+	.factory('cvService', function($http, DOMAIN, API_URLS, $q){
+		var service = {
+			uploadCV: uploadCV,
+		};
+
+		function uploadCV(data){
+			var defer = $q.defer();
+			var url = DOMAIN.server + API_URLS.uploadCV;
+			$http.post(url, data)
+			.success(function(data, status, headers, config){
+				defer.resolve([data, status]);
+			})
+			.error(function(data, status, headers, config){
+				defer.reject([data, status]);
+			});
+
+			return defer.promise;
+		}
+
+		return service;
 	})
 
 })();

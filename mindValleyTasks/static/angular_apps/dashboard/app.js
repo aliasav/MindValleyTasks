@@ -73,7 +73,7 @@
 
     // DO NOT hard code these urls anywhere in the project
     .constant("API_URLS", {
-
+        uploadCV: "api/cv_parser/post/",
     })
 
 ;})();
