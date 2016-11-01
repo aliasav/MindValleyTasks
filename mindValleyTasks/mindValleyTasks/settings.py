@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'cv_parser',
+    'generic',
 ]
 
 MIDDLEWARE_CLASSES = (
@@ -172,6 +174,24 @@ LOGGING = {
     },
     'loggers': {
         'django.request': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+            'formatter': 'verbose',
+        },
+        'request_utils': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+            'formatter': 'verbose',
+        },
+        'cv_parser': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+            'formatter': 'verbose',
+        },
+        'generic': {
             'handlers': ['file'],
             'level': 'DEBUG',
             'propagate': True,

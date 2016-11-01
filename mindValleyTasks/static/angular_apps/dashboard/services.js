@@ -15,5 +15,19 @@ A word on structuring your Factories/Services:
 (function(){
 
 angular.module('app.services', [])
+	
+	.directive('cvViewer', function(){
+	  	return {
+	    	restrict: 'E',
+	    	scope: {
+	    		cvObject: "=cvObject", 	    		
+	    	},
+	    	templateUrl: "views/cvViewer.html",
+	    	controller: function ($scope){
+	    		
+	    	},	    	
+	  	};
+
+	})
 
 })();

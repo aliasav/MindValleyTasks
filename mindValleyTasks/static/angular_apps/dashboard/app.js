@@ -49,6 +49,11 @@
             controller: 'homeController',
             templateUrl:'/static/angular_apps/dashboard/views/home.html',            
         })
+        .state('dashboard.cvUploader',{
+            url:'/upload-cv',
+            controller: 'cvUploaderController',
+            templateUrl:'/static/angular_apps/dashboard/views/cvUploader.html',            
+        })
 
     }])
 

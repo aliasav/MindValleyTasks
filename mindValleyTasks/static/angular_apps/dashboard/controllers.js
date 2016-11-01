@@ -18,6 +18,27 @@
     	){    	
     		    	
 
-    	}])
+    	}
+    ])
+
+    .controller("cvUploaderController",[
+        "$scope", 
+        function($scope){
+
+            $scope.form = {
+                name: null,
+                dob: null,
+                emailID: null,
+                linkedInUrl: null,
+                soUrl: null,
+                githubUrl: null,
+                qualifications: [],
+                workExp: [],
+                projects: [],
+                interests: [],
+            };
+
+        }
+    ])
 
 ;})();
