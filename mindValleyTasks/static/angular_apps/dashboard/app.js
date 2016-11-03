@@ -55,7 +55,7 @@
             templateUrl:'/static/angular_apps/dashboard/views/cvUploader.html',            
         })
         .state('dashboard.ticTacToe',{
-            url:'/upload-cv',
+            url:'/tic-tac-toe',
             controller: 'ticTacToeController',
             templateUrl:'/static/angular_apps/dashboard/views/ticTacToe.html',            
         })
