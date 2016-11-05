@@ -25,6 +25,7 @@
         "$scope",
         function($scope){
 
+            // board used in template
             $scope.board = (function(){
                 var board = [];
                 for (var i=0; i<3; i++){
@@ -35,24 +36,28 @@
                 return board;
             })();
 
+            // game variables
             $scope.game = {
                 turn: 1, // 1-> player, 0-> computer, 2 -> game over or tie
-                reset: false,
-                displayMessage: null,
-                img: null
+                reset: false, // reset button display flag
+                displayMessage: null, // display message
+                img: null, // img associated with X or an O
+                player: "X", // player symbol
+                pc: "O", // pc symbol
+                playerImg: "/static/img/x.png",
+                pcImg: "/static/img/o.png",
             };
-
-            var player = "X";
-            var pc = "O";
 
             // var startTime = null;
             // var endTime = null;
 
             $scope.displayMessage = function(m){
+                // displays a message just above board                
                 $scope.game.displayMessage = m;
             }            
 
             $scope.pieceClicked = function(piece, turn){  
+                // piece clicked by plater
 
                 if(piece.value!==" "){
                     return;
@@ -60,7 +65,7 @@
 
                 if (turn===1){
                     drawMove(piece, turn);
-                    if(checkWinner($scope.board, player)){
+                    if(checkWinner($scope.board, $scope.game.player)){
                         $scope.displayMessage("Hurray, you won! Whoops! That shouldn't have happened!");                        
                         reset();
                         return;
@@ -86,12 +91,12 @@
             function drawMove(piece, turn){
                 // draws move in the template
                 if (turn === 1){
-                    piece.value = player;
-                    piece.img = "/static/img/x.png";
+                    piece.value = $scope.game.player;
+                    piece.img = $scope.game.playerImg;
                 }
                 else{
-                    piece.value = pc;
-                    piece.img = "/static/img/o.png";
+                    piece.value = $scope.game.pc;
+                    piece.img = $scope.game.pcImg;
                 }
             }
 
@@ -108,7 +113,9 @@
 
             function checkWinner(b, p){
                 // check all posible combinations for winner with piece value p
-                var b = $scope.board;
+                // checks rows, columns and disginals
+
+                //var b = $scope.board;
                 return (
                     (b[0].value===p && b[1].value===p && b[2].value===p) ||
                     (b[3].value===p && b[4].value===p && b[5].value===p) ||
@@ -132,7 +139,7 @@
                 drawMove($scope.board[piece.index]);
 
                 // check for winner
-                if (checkWinner($scope.board, pc)){
+                if (checkWinner($scope.board, $scope.game.pc)){
                     $scope.displayMessage("Sorry, you've lost! Try again!");
                     gameFreeze();
                 }
@@ -146,13 +153,13 @@
                 var b = board;
                 var i;
                 var bestPiece = {
-                    value: pc,
+                    value: $scope.game.pc,
                     row: null, 
                     col: null,
                 }
                 for (i=0; i<9; i++){
                     if(b[i].value === " "){
-                        b[i].value = pc;
+                        b[i].value = $scope.game.pc;
                         // find heuristic
                         var pieceHeuristic = minimax(b, 0, 1);
                         //console.log("Obtained pieceHeuristic ", pieceHeuristic, i);
@@ -198,7 +205,7 @@
                     var bestHeuristic = 1000;
                     for(j=0; j<9; j++){
                         if(b[j].value===" "){
-                            b[j].value = player;                          
+                            b[j].value = $scope.game.player;                          
                             bestHeuristic = Math.min(bestHeuristic, minimax(b, depth+1, nextTurn));
                             //console.log("Returned minimax->", bestHeuristic, j);
                             b[j].value = " ";                            
@@ -211,7 +218,7 @@
                     var bestHeuristic = -1000;
                     for(i=0; i<9; i++){
                         if(b[i].value===" "){
-                            b[i].value = pc;                                                 
+                            b[i].value = $scope.game.pc;                                                 
                             bestHeuristic = Math.max(bestHeuristic, minimax(b, depth+1, nextTurn));
                             //console.log("Returned minimax->", bestHeuristic, i);
                             b[i].value = " ";                            
@@ -228,14 +235,11 @@
                 // -10 if player has won
                 // 0 if game can still go on
 
-                //var b = board;
                 var h = null;
-
-                var p = player;
-                if(checkWinner(board, p)){
+                if(checkWinner(board, $scope.game.player)){
                     h = -10;
                 }
-                else if(checkWinner(board, pc)){
+                else if(checkWinner(board, $scope.game.pc)){
                     h = 10;
                 }
                 else{
@@ -243,9 +247,9 @@
                 }
                 return h;                
             }
-            
-            // resets board and other flags
+                        
             function reset(){                
+                // resets board and other flags
 
                 $scope.board = (function(){
                     var board = [];
@@ -261,9 +265,9 @@
                 $scope.game.reset = false;
                 $scope.game.displayMessage = null;
             }
-
-            // freezes board
+            
             function gameFreeze(){
+                // freezes board
                 for (var i=0; i <9; i++){
                     if($scope.board[i].value===" "){
                         $scope.board[i].value = "-";    
@@ -271,9 +275,9 @@
                 }
                 $scope.game.reset = true;
             }
-
-            // resets game on button click
+            
             $scope.reset = function(){
+                // resets function attached to reset button
                 reset();
             }
 
