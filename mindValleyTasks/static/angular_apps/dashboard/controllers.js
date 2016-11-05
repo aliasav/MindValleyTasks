@@ -36,49 +36,62 @@
             })();
 
             $scope.game = {
-                turn: 0, // 0-> player, 1 -> computer, 2 -> game over or tie
+                turn: 1, // 1-> player, 0-> computer, 2 -> game over or tie
+                reset: false,
+                displayMessage: null,
+                img: null
             };
 
-            $scope.pieceClicked = function(piece, turn){                
+            var player = "X";
+            var pc = "O";
 
-                console.log("Turn-> ", turn);
-                if (turn===0){
+            // var startTime = null;
+            // var endTime = null;
+
+            $scope.displayMessage = function(m){
+                $scope.game.displayMessage = m;
+            }            
+
+            $scope.pieceClicked = function(piece, turn){  
+
+                if(piece.value!==" "){
+                    return;
+                }              
+
+                if (turn===1){
                     drawMove(piece, turn);
-                    if(checkWinner("X")){
-                        alert("Hurray, you won!");
+                    if(checkWinner($scope.board, player)){
+                        $scope.displayMessage("Hurray, you won! Whoops! That shouldn't have happened!");                        
                         reset();
+                        return;
                     }
                     else{
                         if(checkGameOver($scope.board)){
-                            alert("Game ends in a Tie!");
+                            $scope.displayMessage("Game ends in a Tie!");
+                            gameFreeze();
+                            $scope.game.reset = true;
+                            return;
                         }
                     }
-                    $scope.game.turn = 1;
+                    $scope.game.turn = 0;
 
+                    //startTime = new Date();
                     simulateComputerMove();
-                }
-                // else{
-                //     console.log("pc's move!");
-                //     makeComputerMove();                  
-                //     if(checkWinner("O")){
-                //         alert("The computer won!");
-                //     }
-                //     else{
-                //         if(checkGameOver()){
-                //             alert("Game ends in a Tie!");
-                //         }
-                //     }
-                //     $scope.game.turn = 0;
-                // }
+                    //endTime = new Date();
+                    //var sec = Math.floor((endTime - startTime) % 60000 / 1000);
+                    //console.log("Time taken for move: ", sec, " seconds.");
+                }                
             }
 
             function drawMove(piece, turn){
                 // draws move in the template
-                if (turn === 0){
-                    piece.value = "X"
+                if (turn === 1){
+                    piece.value = player;
+                    piece.img = "/static/img/x.png";
                 }
                 else{
-                    piece.value = "O";
+                    piece.value = pc;
+                    piece.img = "/static/img/o.png";
                 }
             }
 
@@ -93,7 +106,7 @@
                 return true;
             }
 
-            function checkWinner(p){
+            function checkWinner(b, p){
                 // check all posible combinations for winner with piece value p
                 var b = $scope.board;
                 return (
@@ -109,69 +122,65 @@
             }
 
             function simulateComputerMove(){
-                console.log("Simulating computer move");
                 makeComputerMove();
-                $scope.game.turn = 0;
+                $scope.game.turn = 1;
             }
 
             function makeComputerMove(){
-                console.log("Making PC's move!");
+                // find best move using minimax
                 var piece = findBestMove($scope.board, $scope.game.turn);
-                console.log("Making this move->", piece);               
+                drawMove($scope.board[piece.index]);
+
+                // check for winner
+                if (checkWinner($scope.board, pc)){
+                    $scope.displayMessage("Sorry, you've lost! Try again!");
+                    gameFreeze();
+                }
             }
 
-            function findBestMove(board, turn){                 
+            function findBestMove(board, turn){
+                // finds best move to be made
+                // for maximiser (which is pc)
+
                 var bestHeuristic = -1000;
-                //var b = board; 
+                var b = board;
+                var i;
                 var bestPiece = {
-                    value: (function(){
-                        if (turn===0){
-                            return "X";
-                        }
-                        else{
-                            return "O";
-                        }
-                    })(), 
+                    value: pc,
                     row: null, 
                     col: null,
                 }
-                for (var i=0; i<9; i++){
-                    if(board[i].value === " "){
-                        board[i].value = bestPiece.value;                 
-                        console.log("findBestMove", board[i].value, board, i);
+                for (i=0; i<9; i++){
+                    if(b[i].value === " "){
+                        b[i].value = pc;
                         // find heuristic
-                        var pieceHeuristic = minimax(board, 0, turn);
-                        console.log("Obtained pieceHeuristic ", pieceHeuristic, i);
-                        board[i].value = " ";
+                        var pieceHeuristic = minimax(b, 0, 1);
+                        //console.log("Obtained pieceHeuristic ", pieceHeuristic, i);
+                        b[i].value = " ";
 
                         if( pieceHeuristic > bestHeuristic ){
                             bestHeuristic = pieceHeuristic;
-                            bestPiece.row = Math.round(i/3);
+                            bestPiece.row = Math.floor(i/3);
                             bestPiece.col = i%3;
+                            bestPiece.index = i;
                         }
                     }
                 }
                 return bestPiece;
             }
 
-            $scope.iter = 0;
+            function minimax(board, depth, turn){  
+                // minimax algorithm implementation
 
-            function minimax(board, depth, turn){
-                $scope.iter += 1;
-                if($scope.iter>3){
-                    return 0;
-                }
                 var b = board;
                 var heuristic = evaluateHeuristic(b);
-                var p = "X";
-                var pc = "O";
-                var nextTurn;                
+                var nextTurn = null; var i = null; var j = null;
 
-                if (heuristic===10 || heuristic===-10){
+                if(heuristic===10 || heuristic===-10){
                     return heuristic;
                 }
 
-                if (checkGameOver(b)){
+                if(checkGameOver(b)){
                     return 0;
                 }
                 
@@ -182,108 +191,61 @@
                     nextTurn = 0;
                 }
 
-                console.log("In minimix ", b, depth, turn, heuristic, nextTurn);
-
+                //console.log("In minimix ", b, depth, turn, heuristic, nextTurn);
+                //debugger;
                 if (turn===1){
+                    // minimiser                    
                     var bestHeuristic = 1000;
-                    for(var i=0; i<9; i++){
-                        if(b[i].value===" "){
-                            b[i].value = pc;
-                            console.log(b[i], b, i)                            
+                    for(j=0; j<9; j++){
+                        if(b[j].value===" "){
+                            b[j].value = player;                          
                             bestHeuristic = Math.min(bestHeuristic, minimax(b, depth+1, nextTurn));
-                            console.log("Returned minimax->", bestHeuristic);
-                            b[i].value = " ";                            
+                            //console.log("Returned minimax->", bestHeuristic, j);
+                            b[j].value = " ";                            
                         }
-                    }
+                    }                    
                     return bestHeuristic;
                 }
                 else{
+                    // maximiser
                     var bestHeuristic = -1000;
-                    for(var i=0; i<9; i++){
+                    for(i=0; i<9; i++){
                         if(b[i].value===" "){
-                            b[i].value = p;
-                            console.log(b[i])
+                            b[i].value = pc;                                                 
                             bestHeuristic = Math.max(bestHeuristic, minimax(b, depth+1, nextTurn));
-                            console.log("Returned minimax->", bestHeuristic);
+                            //console.log("Returned minimax->", bestHeuristic, i);
                             b[i].value = " ";                            
                         }
-                    }
+                    }                   
                     return bestHeuristic;
                 }
             }
-
 
 
             function evaluateHeuristic(board){
                 // returns heuristic score
-                // +10 if player has won
-                // -10 if pc has won
+                // +10 if pc has won
+                // -10 if player has won
                 // 0 if game can still go on
 
-                var b = board;
-                var p = "X"; var pc = "O"; var h = 0;
-                
-                // check rows                                
-                for (var i=0; i<6; i=i+3){
-                    
-                    if (b[i].value===p && b[i=1].value===p && b[i+2].value===p){
-                        h = 10;
-                    }
+                //var b = board;
+                var h = null;
 
-                    if (b[i].value===pc && b[i=1].value===pc && b[i+2].value===pc){
-                        h = -10;
-                    }
-                    
-                }
-
-                // check columns
-                if(b[0].value===p && b[3].value===p && b[6]===p){
-                    h = 10;                    
-                }    
-                if(b[0].value===pc && b[3].value===pc && b[6]===pc){
+                var p = player;
+                if(checkWinner(board, p)){
                     h = -10;
                 }
-
-                if(b[1].value===p && b[4].value===p && b[7]===p){
+                else if(checkWinner(board, pc)){
                     h = 10;
-                }    
-                if(b[1].value===pc && b[4].value===pc && b[7]===pc){
-                    h = -10;
-                }
-
-                if(b[2].value===p && b[5].value===p && b[8]===p){
-                    h = 10;
-                }    
-                if(b[2].value===pc && b[5].value===pc && b[8]===pc){
-                    h = -10;
-                }
-
-                // check diagonals
-                if (b[0].value===p && b[4].value===p && b[8].value===p){
-                    h = 10;
-                }
-
-                if (b[0].value===pc && b[4].value===pc && b[8].value===pc){
-                    h = -10;
-                }
-
-                if (b[2].value===p && b[4].value===p && b[6].value===p){
-                    h = 10;
-                }
-                if (b[2].value===pc && b[4].value===pc && b[6].value===pc){
-                    h = -10;
-                }
-
-                console.log("calculated heuristic -> ", h);
-                if(h===10 || h===-10){
-                    return h;
                 }
                 else{
-                    return 0;    
-                }            
+                    h = 0;
+                }
+                return h;                
             }
-
-            function reset(){
+            
+            // resets board and other flags
+            function reset(){                
 
                 $scope.board = (function(){
                     var board = [];
@@ -295,9 +257,26 @@
                     return board;
                 })();
 
-                $scope.game.turn = 0;
-
+                $scope.game.turn = 1;
+                $scope.game.reset = false;
+                $scope.game.displayMessage = null;
             }
+
+            // freezes board
+            function gameFreeze(){
+                for (var i=0; i <9; i++){
+                    if($scope.board[i].value===" "){
+                        $scope.board[i].value = "-";    
+                    }                    
+                }
+                $scope.game.reset = true;
+            }
+
+            // resets game on button click
+            $scope.reset = function(){
+                reset();
+            }
+
 
         }
     ])

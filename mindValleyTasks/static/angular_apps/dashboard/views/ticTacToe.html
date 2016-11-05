@@ -19,30 +19,53 @@
 		        		<div class="col-md-12">
 		        			<center><h4><b>Let's Play! Your move!</b></h4></center>
 		        		</div> 	
-		        	</div>
-		            
+		        	</div>		        			            
 		        </div>
 		        
 
 		        <div class="panel-body">
-		        	<div class="box box-primary">
-			            <div class="box-header with-border">
-			              <center><h3 class="box-title text-center" ng-show="game.turn===0">Your Turn!</h3></center>
-			            </div>
+		        	<div class="box box-primary">			            
+			            <div class="row" ng-show="game.displayMessage">
+			        		<div class="col-md-12">
+			        			<center><h4><b>[[ game.displayMessage ]]</b></h4></center>
+			        		</div> 	
+			        	</div><br>
+			        	<div class="row" ng-show="game.reset">
+				        	<div class="col-md-12">
+				        		<center>
+				        			<button class="btn btn-md btn-primary" ng-click="reset()">RESET</button>
+				        		</center>
+				        		<br>
+				        	</div>
+				        </div>
 			            <br>
+			            
 			            <div class="box-body">
 				            <div class="row">
-				            	<div class="col-md-12">
+				            	<div class="col-md-8 col-md-offset-2">				            	
+				            		<br><br>
 				            		<div class="col-md-4" ng-repeat="piece in board">
-				            			<a class="btn btn-app col-md-12 text-center" ng-click="pieceClicked(piece, game.turn)" ng-disabled="piece.value!==' '">
-							                 [[ piece.value ]]
-							            </a>
-				            		</div>				            		
+				            			<center>
+				            				<a class="btn btn-app text-center" ng-click="pieceClicked(piece, game.turn)" ng-disabled="piece.value!==' ' || piece.value==='-'" style="background-image: url([[ piece.img ]]); background-position: center; max-width:100%; max-height:100%; background-size: contain; background-repeat: no-repeat;">
+								                 
+								            </a>
+				            			</center>		
+				            			<br><br>		            			
+				            		</div>				            				            		
 				            	</div>				        		
 				        	</div>
 				        	<br>		        	
 			        	</div>			            
 			          </div>		        	
+		        </div>
+
+		        <div class="row" ng-show="game.reset">
+		        	<div class="col-md-12">
+		        		<center>
+		        			<button class="btn btn-md btn-primary" ng-click="reset()">RESET</button>
+		        		</center>
+		        		<br>
+		        	</div>
 		        </div>
 
 		    </div>
