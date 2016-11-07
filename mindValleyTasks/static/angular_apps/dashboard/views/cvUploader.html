@@ -15,9 +15,12 @@
     		<div class="panel panel-info">
 		        <div class="panel-heading">
 		        	<div class="row">
-		        		<div class="col-md-12">
-		        			<center><h4><b>Enter CV JSON</b></h4></center>
+		        		<div class="col-md-11">
+		        			<center><h4><b>Enter CV JSON</b></h4></center>		        			
 		        		</div> 	
+		        		<div class="col-md-1">
+		        			<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#sampleModal">Sample</button>
+		        		</div>
 		        	</div>
 		            
 		        </div>
@@ -135,9 +138,20 @@
 			            </div>
 			            <br>
 			            <div class="box-body">
-				            <div class="row">
+				            <div class="row" ng-repeat="q in cvObject.qualifications">
 				            	<div class="col-md-12">
-				            		[[cvObject.qualifications]]
+				            		<label>Title:</label><br>
+				            		[[ q.title ]]
+				            	</div>	
+				            	<br><br>			        		
+				            	<div class="col-md-12">
+				            		<label>Text:</label><br>
+				            		[[ q.text ]]
+				            	</div>			
+				            	<br><br>	        		
+				            	<div class="col-md-12">
+				            		<label>Summary:</label><br>
+				            		[[ q.summary ]]
 				            	</div>				        		
 				        	</div>
 				        	<br>		        	
@@ -154,10 +168,27 @@
 			            </div>
 			            <br>
 			            <div class="box-body">
-				            <div class="row">
+				            <div class="row" ng-repeat="w in cvObject.work_experiences">
 				            	<div class="col-md-12">
-				            		[[cvObject.work_experiences]]
-				            	</div>				        		
+				            		<label>Title</label><br>
+				            		[[w.title]]
+				            	</div>
+				            	<br><br>
+				            	<div class="col-md-12">
+				            		<label>Company</label><br>
+				            		[[w.company]]
+				            	</div>
+				            	<br><br>
+				            	<div class="col-md-12">
+				            		<label>Role</label><br>
+				            		[[w.role]]
+				            	</div>
+				            	<br><br>
+				            	<div class="col-md-12">
+				            		<label>Summary</label><br>
+				            		[[w.summary]]
+				            	</div>
+
 				        	</div>
 				        	<br>		        	
 			        	</div>			            
@@ -172,9 +203,15 @@
 			            </div>
 			            <br>
 			            <div class="box-body">
-				            <div class="row">
+				            <div class="row" ng-repeat="p in cvObject.projects">
 				            	<div class="col-md-12">
-				            		[[cvObject.projects]]
+				            		<label>Title</label><br>
+				            		[[p.title]]
+				            	</div>
+				            	<br><br>
+				            	<div class="col-md-12">
+				            		<label>summary</label><br>
+				            		[[p.summary]]
 				            	</div>				        		
 				        	</div>
 				        	<br>		        	
@@ -182,12 +219,7 @@
 			          </div>		        	
 		        </div>
 
-
-		        <div class="row">
-		        	<div class="col-md-4 col-md-offset-4">
-		        		<button type="button" class="btn btn-block btn-success btn-lg" ng-click="reset()">RESET</button>
-		        	</div>
-		        </div>
+		   
 
 		        <br>
 
@@ -196,3 +228,65 @@
     </div>
 </div>
 
+
+
+<div class="modal fade" data-keyboard="false" id="sampleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Sample JSON</b></h4>
+            </div>
+            <div class="modal-body">
+            	<p>
+            	<pre>
+            		
+{
+  "name": "aliasav",
+  "email": "saurabh.av@cube26.com",
+  "dob": "24-05-1993",
+  "phone_number": "9953092832",
+  "stackOverFlowLink": "http://stackoverflow.com/users/3725732/aliasav",
+  "linkedinLink": "https://in.linkedin.com/in/saurabhav",
+  "githubLink": "https://github.com/aliasav",
+  "qualifications": [
+	{
+	  "title": "BE Computer Science", 
+	  "text": "Computer Science from Thapar University ", 
+	  "summary": "Learned the art of computer science!"
+	},
+  ],
+  "work_experiences": [
+	{
+	  "title": "Cure On Delivery: Platforms Engineer", 
+	  "company": "Cure On Delivery", 
+	  "role": "Platforms Engineer", 
+	  "from_date": "1-1-2015", 
+	  "to_date": "6-6-2015", 
+	  "summary": "Learnt about software development!",
+	},
+
+	{
+	  "title": "Cube26", 
+	  "company": "COD", 
+	  "role": "Platforms Engineer", 
+	  "from_date": "1-1-2015", 
+	  "to_date": "6-6-2015", 
+	  "summary":""
+	},
+  ],	
+  "projects": [
+	{"title": "Smokeager"}, 
+	{"title": "Remembrall", "summary": "Command line to do list"}
+  ]
+}
+			</pre>
+			</p>
+            	
+            </div>            
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
