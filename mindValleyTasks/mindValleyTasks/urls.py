@@ -30,6 +30,8 @@ urlpatterns = [
 
     url(r'^', include('cv_parser.urls')),
 
+    url(r'^', include('urlShortner.urls')),
+
     #url(r'^', include('cv_parser.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

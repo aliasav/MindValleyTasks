@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'cv_parser',
     'generic',
+    'urlShortner',
 ]
 
 MIDDLEWARE_CLASSES = (

@@ -59,6 +59,16 @@
             controller: 'ticTacToeController',
             templateUrl:'/static/angular_apps/dashboard/views/ticTacToe.html',            
         })
+        .state('dashboard.ticTacToe2',{
+            url:'/tic-tac-toe2',
+            controller: 'ticTacToeController2',
+            templateUrl:'/static/angular_apps/dashboard/views/ticTacToe2.html',            
+        })
+        .state('dashboard.urlShortner', {
+            url: '/url-shortner',
+            controller: 'urlShortnerController',
+            templateUrl:'/static/angular_apps/dashboard/views/urlShortner.html',
+        })
 
     }])
 
