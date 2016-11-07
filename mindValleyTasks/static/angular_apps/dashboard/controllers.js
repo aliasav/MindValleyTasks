@@ -12,11 +12,13 @@
     
     // home (dashboard) controller
     .controller("homeController", [
-    	"$scope",    	
-    	function(
-    		$scope
-    	){    	
-    		    	
+    	"$scope", 
+        "$state",   	
+    	function($scope, $state){    	
+    		
+            $scope.stateChange = function(state){
+                $state.go(state);
+            }
 
     	}
     ])
@@ -652,6 +654,7 @@
                 }
                 else{
                     console.log("Invalid url: ", $scope.inputUrl);
+                    alert("Please enter a valid URL!");
                 }
             }
 
