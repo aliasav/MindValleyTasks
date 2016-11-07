@@ -81,7 +81,7 @@
     // if modifying, also make corresponding changes in app_js_settings.sh in ops as well
     .constant("DOMAIN", {
         server: "http://127.0.0.1:8000/", // local
-        server1: "http:///", // production
+        server1: "http://139.59.21.6/", // production
 
 
     })
@@ -89,6 +89,7 @@
     // DO NOT hard code these urls anywhere in the project
     .constant("API_URLS", {
         uploadCV: "api/cv_parser/post/",
+        shortenUrl: "api/url_shortner/post/",
     })
 
 ;})();

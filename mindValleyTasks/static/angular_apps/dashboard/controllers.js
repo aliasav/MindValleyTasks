@@ -625,7 +625,13 @@
         "UTILS",
         "$http",
         "$q",
-        function($scope, UTILS, $http, $q){
+        "DOMAIN",
+        "API_URLS",
+        function($scope, UTILS, $http, $q, DOMAIN, API_URLS){
+
+            $scope.response = null;
+            $scope.inputUrl = null;
+            $scope.success = false;
 
             $scope.shorten = function(){
                 if(validateUrl($scope.inputUrl)){
@@ -633,8 +639,15 @@
                     shorten($scope.inputUrl)
                     .then(function(resolve){
                         console.log(resolve);
+                        $scope.response = resolve[0];
+                        $scope.success = true;
+
+                        $scope.redirectUrl = DOMAIN.server + "rdr/" + $scope.response;
+
                     }, function(reject){
                         console.error(reject);
+                        $scope.response = reject[0];
+                        $scope.success = false;
                     });
                 }
                 else{

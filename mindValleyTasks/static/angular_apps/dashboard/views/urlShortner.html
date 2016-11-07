@@ -37,8 +37,31 @@
 
 				            		<center>
 				            			<button class="btn btn-primary btn-md" ng-click="shorten()">Shorten!</button>
-				            		</center>				            		
-				            	</div>				        		
+				            		</center>		
+				            		<br>
+				            	</div>	
+
+				            	<div class="col-md-8 col-md-offset-2">
+				            		
+				            		<label>Short URL:</label>
+				            		<br>
+				            		<center>
+				            			[[ response ]]
+				            		</center>		
+				            		<br>
+				            	</div>
+
+				            	<div class="col-md-8 col-md-offset-2" ng-show="success">
+				            		
+				            		<label>Access this url at:</label>
+				            		<br>
+				            		<center>
+				            			<a href="[[ redirectUrl ]]">[[ redirectUrl ]]</a>
+				            		</center>		
+				            		<br>
+				            	</div>
+
+
 				        	</div>				        		
 			        	</div>			            
 			          </div>		        	

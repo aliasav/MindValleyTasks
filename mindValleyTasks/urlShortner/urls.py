@@ -5,7 +5,7 @@ from urlShortner import views as urlShortner_views
 
 urlpatterns = [            
 	url(r'^api/url_shortner/post/$', urlShortner_views.shorten),
-	url(r'^redirect/(?P<short_url>.+)/$', urlShortner_views.redirect),
+	url(r'^rdr/(?P<short_url>.+)/$', urlShortner_views.redirect),
     
 ]
 
