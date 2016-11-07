@@ -3,7 +3,7 @@
 # fetch code
 cd ../mindValleyTasks/
 git checkout -- static/angular_apps/dashboard/app.js
-git pull origin feature/ttt
+git pull origin develop
 
 # make app.js changes
 source ops/angularjs_settings.sh
