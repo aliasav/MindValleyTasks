@@ -585,7 +585,6 @@
                 $scope.cvObject = null;    
             })();
 
-            
 
             $scope.submit = function(){     
                 $scope.uploaderState = 1;         
@@ -593,7 +592,9 @@
                     var json = JSON.parse($scope.cvJson);    
                 }
                 catch(err){
-                    alert("Please enter a valid JSON!\n\n", err);
+                    alert("Please enter a valid JSON!\n\n" + String(err));
+                    console.error(err);
+                    $scope.uploaderState = 0;
                     return;
                 }  
                 
@@ -610,12 +611,13 @@
                 }
                 else{
                     alert("Please enter a valid JSON!");
+                    $scope.uploaderState = 0;
                 }
             }
 
             $scope.reset = function(){
                 $scope.cvJson = null;
-                $socpe.uploaderState = 0;
+                $scope.uploaderState = 0;
                 $scope.cvObject = null;
             }
 
