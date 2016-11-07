@@ -138,19 +138,19 @@
 			            </div>
 			            <br>
 			            <div class="box-body">
-				            <div class="row" ng-repeat="q in cvObject.qualifications">
+				            <div class="row box" ng-repeat="q in cvObject.qualifications" style="margin-bottom: 3%; padding: 2%">
 				            	<div class="col-md-12">
-				            		<label>Title:</label><br>
+				            		<label>Title</label><br>
 				            		[[ q.title ]]
 				            	</div>	
 				            	<br><br><br><br>
 				            	<div class="col-md-12">
-				            		<label>Text:</label><br>
+				            		<label>Text</label><br>
 				            		[[ q.text ]]
 				            	</div>			
 				            	<br><br><br><br>    		
 				            	<div class="col-md-12">
-				            		<label>Summary:</label><br>
+				            		<label>Summary</label><br>
 				            		[[ q.summary ]]
 				            	</div>				        		
 				        	</div>
@@ -168,7 +168,7 @@
 			            </div>
 			            <br>
 			            <div class="box-body">
-				            <div class="row" ng-repeat="w in cvObject.work_experiences">
+				            <div class="row box" ng-repeat="w in cvObject.work_experiences" style="margin-bottom: 3%; padding: 2%">
 				            	<div class="col-md-12">
 				            		<label>Title</label><br>
 				            		[[w.title]]
@@ -203,14 +203,14 @@
 			            </div>
 			            <br>
 			            <div class="box-body">
-				            <div class="row" ng-repeat="p in cvObject.projects">
+				            <div class="row box" ng-repeat="p in cvObject.projects" style="margin-bottom: 3%; padding: 2%">
 				            	<div class="col-md-12">
 				            		<label>Title</label><br>
 				            		[[p.title]]
 				            	</div>
 				            	<br><br><br><br>
 				            	<div class="col-md-12">
-				            		<label>summary</label><br>
+				            		<label>Summary</label><br>
 				            		[[p.summary]]
 				            	</div>				        		
 				        	</div>
