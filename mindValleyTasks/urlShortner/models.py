@@ -23,12 +23,16 @@ class URL(models.Model):
         
     @staticmethod
     def __hash(key):
-    	""" fnv hashing """
+    	""" fnv hashing: using 32 bit hash parameters 
+        and returns a 8 bit string """
 
-        h = 2166136261
-        
+        h = 2166136261 # 32 bit FNV offset basis hash
+        fnv_prime = 16777619 # 32 bit FNV prime    
+
         for k in key:
-            h = (h*16777619)^ord(k)
+            # multiply hash with FNV prime and 
+            # XOR with the ordinal of byte
+            h = (h*fnv_prime)^ord(k)
         
         # Return 8 bit URL
         return base64.encode(h%281474976710656)
