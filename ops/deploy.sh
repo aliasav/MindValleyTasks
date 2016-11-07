@@ -6,7 +6,7 @@ git checkout -- static/angular_apps/dashboard/app.js
 git pull origin develop
 
 # make app.js changes
-source ops/angularjs_settings.sh
+source ../ops/angularjs_settings.sh
 
 # perform collectstatic
 python manage.py collectstatic --noinput
