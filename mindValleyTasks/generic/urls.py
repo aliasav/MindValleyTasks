@@ -7,6 +7,7 @@ urlpatterns = [
 	url(r'^$', generic_views.render_landing_page),
     url(r'^home', generic_views.render_landing_page),
     url(r'^home/$', generic_views.render_landing_page),
+    url(r'^wedding/$', generic_views.render_wedding_landing_page),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

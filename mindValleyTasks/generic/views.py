@@ -16,3 +16,10 @@ def render_landing_page(request, template="templates/dashboard/home.html"):
     """
     context = {}
     return render(request, template, context)
+
+def render_wedding_landing_page(request, template="templates/wedding/base.html"):
+    """
+    Renders landing page
+    """
+    context = {}
+    return render(request, template, context)

@@ -134,6 +134,7 @@ MEDIA_URL = '/media/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static/"), 
     os.path.join(BASE_DIR, "static/vendor/AdminLTE-master/"),
+    os.path.join(BASE_DIR, "static/vendor/wedding-theme/web/"),
 
 )
 STATIC_ROOT = os.path.join(BASE_DIR, "public/")
